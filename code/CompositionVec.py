@@ -36,7 +36,7 @@ def compute_composition(img, colors_arr):
 	ordered_dictionary_coordinate = {}
 	key_itr = 0
 	for i in ordered_ind:
-		if composition[i]>0.02: #Colors with atleast 2% composition are considered
+		if composition[i]>0.01: #Colors with atleast 1% composition are considered
 			ordered_composition.append(composition[i])
 			ordered_colors.append(colors_arr[i,:])
 			ordered_dictionary_coordinate[key_itr]= dictionary_coordinate[i]

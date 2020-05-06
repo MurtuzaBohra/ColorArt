@@ -90,13 +90,18 @@ def calCompositionAndAdjacency(filename):
 if __name__=='__main__':
 	
 	inputColors, inputComposition, inputAjdacency = calCompositionAndAdjacency(inputFilename)
+	# print(inputColors)
+	# print(inputComposition)
+	# exit()
 	referenceColors, referenceComposition, referenceAjdacency = calCompositionAndAdjacency(referenceFilename)
 
 	print('----Compositions and Adjacency matrices calculated ----')
-
+	print('number of colors in input and reference image', inputColors.shape[0], referenceColors.shape[0])
 	if inputColors.shape[0]>referenceColors.shape[0]:
 		print('---reference color palette has lesser colors than input color palette---')
-		exit()
+		inputColors = inputColors[:referenceColors.shape[0], :]
+		inputComposition = inputComposition[:referenceColors.shape[0]]
+		inputAjdacency = inputAjdacency[:referenceColors.shape[0], :referenceColors.shape[0]]
 	else:
 		referenceColors = referenceColors[:inputColors.shape[0], :]
 		referenceComposition = referenceComposition[:inputColors.shape[0]]

@@ -5,7 +5,7 @@ def svg2png(svgFilename):
 	pngFilename = svgFilename.rstrip('.svg')+'.png'
 
 	try:
-		cmd = "inkscape -z -e "+pngFilename+" -w 256 -b \'#ffffff\' "+svgFilename+""
+		cmd = "inkscape -z -e "+pngFilename+" -w 512 -b \'#ffffff\' "+svgFilename+""
 		os.system(cmd)
 	except:
 		print('***could not convert svg to png***')
