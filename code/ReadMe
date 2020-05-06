@@ -1,0 +1,10 @@
+Execution Requirements:
+	- inkscap
+	- scipy
+	- heapq
+	- cv2
+
+Execution Instruction:
+	- execute following command with python3 environment
+		- python Recolor_svg.py ../sampleData/input.svg ../sampleData/reference2.svg
+
