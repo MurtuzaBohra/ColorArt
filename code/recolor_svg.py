@@ -26,7 +26,7 @@ def hungarian_matching(cost_matrix):
 	return matchingList
 
 #----------------------------------------------------------------------------------------
-#---------------New neighbourhood cost based eigendecomposition color matching-----------
+#----------------------------------------------------------------------------------------
 
 #m1[i,j]= distance between ith color of matrix1 and jth color of matrix2
 def compositionCost(composition1, composition2):
@@ -90,31 +90,21 @@ def calCompositionAndAdjacency(filename):
 if __name__=='__main__':
 	
 	inputColors, inputComposition, inputAjdacency = calCompositionAndAdjacency(inputFilename)
-	# print(inputColors)
-	# print(inputComposition)
-	# exit()
 	referenceColors, referenceComposition, referenceAjdacency = calCompositionAndAdjacency(referenceFilename)
 
 	print('----Compositions and Adjacency matrices calculated ----')
 	print('number of colors in input and reference image', inputColors.shape[0], referenceColors.shape[0])
-	if inputColors.shape[0]>referenceColors.shape[0]:
-		print('---reference color palette has lesser colors than input color palette---')
-		inputColors = inputColors[:referenceColors.shape[0], :]
-		inputComposition = inputComposition[:referenceColors.shape[0]]
-		inputAjdacency = inputAjdacency[:referenceColors.shape[0], :referenceColors.shape[0]]
+	if inputColors.shape[0]==referenceColors.shape[0]:
+		matchingList, matchingCost = EigenDecomposition_Color_matching(inputAjdacency, referenceAjdacency, inputComposition, referenceComposition)
+		print('***Color matching is done***')
+
+		recoloredSVG = recolor_util.recolor(namedColorsFilename, inputFilename, inputColors, referenceColors, matchingList)
+		# Write the file out again
+		with open(inputFilename.rstrip('.svg')+'Recolored.svg', 'w') as file:
+			file.write(recoloredSVG)
+		print('---output coloring has been generated---')
+
 	else:
-		referenceColors = referenceColors[:inputColors.shape[0], :]
-		referenceComposition = referenceComposition[:inputColors.shape[0]]
-		referenceAjdacency = referenceAjdacency[:inputColors.shape[0], :inputColors.shape[0]]
-
-	matchingList, matchingCost = EigenDecomposition_Color_matching(inputAjdacency, referenceAjdacency, inputComposition, referenceComposition)
-	print('***Color matching is done***')
-
-	recoloredSVG = recolor_util.recolor(namedColorsFilename, inputFilename, inputColors, referenceColors, matchingList)
-	# Write the file out again
-	with open(inputFilename.rstrip('.svg')+'Recolored.svg', 'w') as file:
-		file.write(recoloredSVG)
-	print('---output coloring has been generated---')
-
+		print('---Different number of colors in input and reference image---')
 #---------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------
